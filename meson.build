@@ -10,6 +10,9 @@ project(
     ]
 )
 
+compiler = meson.get_compiler('c')
+
+backtrace = compiler.find_library('backtrace')
 md2manc = find_program('md2manc', required: get_option('man-pages'))
 
 add_project_arguments(
@@ -19,8 +22,6 @@ add_project_arguments(
     language: 'c'
 )
 
-add_project_link_arguments('-lbacktrace', language: 'c')
-
 headers = files('include/sigtrace.h')
 sources = files('src/sigtrace.c')
 
@@ -29,6 +30,7 @@ install_headers(headers)
 sigtrace = static_library( # sigtrace as a shared library fails to link
     'sigtrace',
     sources,
+    dependencies: [backtrace],
     include_directories: 'include',
     install: true
 )
@@ -38,8 +40,7 @@ pkgconfig.generate(
     sigtrace,
     name: 'sigtrace',
     description: 'C library for generating stack traces on fault/signal',
-    url: 'https://github.com/deimonn/sigtrace',
-    libraries: '-lbacktrace'
+    url: 'https://github.com/deimonn/sigtrace'
 )
 
 if md2manc.found()
