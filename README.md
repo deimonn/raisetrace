@@ -27,6 +27,9 @@ This would make the program generate a stack trace before it terminates when it 
 
 ### Procedure
 
+> [!NOTE]
+> sigtrace must be built as the same library type that libbacktrace is; if your system's libbacktrace is a static library, pass `-Ddefault_library=static` to `meson setup` or it'll fail to link.
+
 1. Configure and change into the build directory with `meson setup builddir && cd builddir`
 
 2. Build with `ninja`
