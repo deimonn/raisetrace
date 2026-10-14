@@ -27,7 +27,7 @@ sources = files('src/sigtrace.c')
 
 install_headers(headers)
 
-sigtrace = static_library( # sigtrace as a shared library fails to link
+sigtrace = library(
     'sigtrace',
     sources,
     dependencies: [backtrace],
