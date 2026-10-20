@@ -11,12 +11,12 @@ extern const int sigtrace_faults[];
 
 extern const int sigtrace_unhandled[];
 
-int sigtrace(const int *signal_list);
+int sigtrace(const int *siglist);
 ```
 
 # Description
 
-**sigtrace**() installs a signal handler via **sigaction**(2) for each of the signals specified in _signal_list_. The _signal_list_ must be zero terminated.
+**sigtrace**() installs a signal handler via **sigaction**(2) for each of the signals specified in _siglist_. The _siglist_ array must be zero-terminated.
 
 The handler will print signal information via **psiginfo**(3) and, when the platform supports it, follow it with a full stack trace. Afterwards, the handler simply performs the default action for the signal.
 
@@ -46,7 +46,7 @@ Returns 0 on success, a negative error number on failure.
 
 + **-EINVAL**
 
-  One or more values in _signal_list_ either aren't a valid signal number, or represent a signal that cannot be caught. Rest of signals, if any, will still have been processed correctly.
+  One or more values in _siglist_ either aren't a valid signal number, or represent a signal that cannot be caught. Rest of signals, if any, will still have been processed correctly.
 
 Note that all error codes are negated. To convert them to regular **errno**(3) values for comparison or passing to **strerror**(3), apply unary negation on the return value first.
 

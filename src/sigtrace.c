@@ -41,7 +41,7 @@ static void sigtrace_action(int signum, siginfo_t *siginfo, void *context)
     default_action(signum);
 }
 
-int sigtrace(const int *signal_list)
+int sigtrace(const int *siglist)
 {
     if (!backtrace_state)
         backtrace_state = backtrace_create_state(NULL, 1, NULL, NULL);
@@ -53,8 +53,8 @@ int sigtrace(const int *signal_list)
 
     int error = 0;
 
-    for (size_t i = 0; signal_list[i]; i++) {
-        if (sigaction(signal_list[i], &action, NULL) != 0)
+    for (size_t i = 0; siglist[i]; i++) {
+        if (sigaction(siglist[i], &action, NULL) != 0)
             error = -EINVAL;
     }
 

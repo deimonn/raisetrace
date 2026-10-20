@@ -11,9 +11,9 @@ extern const int sigtrace_faults[];
 extern const int sigtrace_unhandled[];
 
 /* Install a handler that prints siginfo and a stack trace (when supported) for
- * each of the specified signals. The signal_list must be zero-terminated.
+ * each of the specified signals. The siglist array must be zero-terminated.
  *
  * Returns 0 on success, a negative error number on failure. */
-int sigtrace(const int *signal_list);
+int sigtrace(const int *siglist);
 
 #endif
