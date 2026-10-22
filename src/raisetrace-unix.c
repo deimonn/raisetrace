@@ -1,16 +1,16 @@
-#include <sigtrace.h>
+#include <raisetrace.h>
 
 #include <backtrace.h>
 
 #include <errno.h>
 #include <signal.h>
 
-const int sigtrace_faults[] = {
+const int raisetrace_faults[] = {
     SIGABRT, SIGBUS, SIGFPE, SIGILL, SIGQUIT, SIGSEGV, SIGSYS, SIGTRAP, SIGXCPU,
     SIGXFSZ, 0
 };
 
-const int sigtrace_unhandled[] = {
+const int raisetrace_unhandled[] = {
     SIGALRM, SIGHUP, SIGINT, SIGPIPE, SIGTERM, SIGUSR1, SIGUSR2, SIGVTALRM, 0
 };
 
@@ -28,7 +28,7 @@ static void default_action(int signum)
     sigaction(signum, &old_action, NULL);
 }
 
-static void sigtrace_action(int signum, siginfo_t *siginfo, void *context)
+static void raisetrace_action(int signum, siginfo_t *siginfo, void *context)
 {
     (void)context;
 
@@ -41,7 +41,7 @@ static void sigtrace_action(int signum, siginfo_t *siginfo, void *context)
     default_action(signum);
 }
 
-int sigtrace(const int *siglist)
+int raisetrace(const int *siglist)
 {
     if (!backtrace_state)
         backtrace_state = backtrace_create_state(NULL, 1, NULL, NULL);
@@ -49,7 +49,7 @@ int sigtrace(const int *siglist)
     struct sigaction action = {0};
 
     action.sa_flags = SA_SIGINFO | SA_NODEFER;
-    action.sa_sigaction = sigtrace_action;
+    action.sa_sigaction = raisetrace_action;
 
     int error = 0;
 

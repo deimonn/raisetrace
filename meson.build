@@ -1,5 +1,5 @@
 project(
-    'sigtrace', 'c',
+    'raisetrace', 'c',
     version: '0.2.0',
     license: 'MIT',
     license_files: 'LICENSE',
@@ -22,13 +22,13 @@ add_project_arguments(
     language: 'c'
 )
 
-headers = files('include/sigtrace.h')
-sources = files('src/sigtrace.c')
+headers = files('include/raisetrace.h')
+sources = files('src/raisetrace-unix.c')
 
 install_headers(headers)
 
-sigtrace = library(
-    'sigtrace',
+raisetrace = library(
+    'raisetrace',
     sources,
     dependencies: [backtrace],
     include_directories: 'include',
@@ -37,34 +37,34 @@ sigtrace = library(
 
 pkgconfig = import('pkgconfig')
 pkgconfig.generate(
-    sigtrace,
-    name: 'sigtrace',
+    raisetrace,
+    name: 'raisetrace',
     description: 'C library for generating stack traces on fault/signal',
-    url: 'https://github.com/deimonn/sigtrace'
+    url: 'https://github.com/deimonn/raisetrace'
 )
 
 if md2manc.found()
     date = run_command('date', '+%Y-%m-%d', check: true).stdout().strip()
 
     custom_target(
-        'sigtrace.3',
+        'raisetrace.3',
         command: [
             md2manc,
             '-d', date,
-            '-S', 'sigtrace ' + meson.project_version(),
+            '-S', 'raisetrace ' + meson.project_version(),
             '@INPUT@'
         ],
-        input: 'docs/sigtrace.3.md',
-        output: 'sigtrace.3',
+        input: 'docs/raisetrace.3.md',
+        output: 'raisetrace.3',
         capture: true,
         install: true,
         install_dir: get_option('mandir') + '/man3'
     )
 
     install_man(
-        'docs/sigtrace_faults.3',
-        'docs/sigtrace_unhandled.3'
+        'docs/raisetrace_faults.3',
+        'docs/raisetrace_unhandled.3'
     )
 endif
 
-meson.add_postconf_script('compile_flags.py', 'sigtrace')
+meson.add_postconf_script('compile_flags.py', 'raisetrace')

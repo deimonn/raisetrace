@@ -1,19 +1,19 @@
-# sigtrace
+# raisetrace
 
-**sigtrace** is a simple library for generating messages with stack traces when a signal is received. You set it up like so:
+**raisetrace** is a simple library for generating messages with stack traces when a signal is received. You set it up like so:
 
 ```C
-#include <sigtrace.h>
+#include <raisetrace.h>
 
 int main(int argc, char **argv)
 {
-    sigtrace(sigtrace_faults);
+    raisetrace(raisetrace_faults);
 
     // ...
 }
 ```
 
-This would make the program generate a stack trace before it terminates when it faults. More information is available on the [**sigtrace**(3)](docs/sigtrace.3.md) man page.
+This would make the program generate a stack trace before it terminates when it faults. More information is available on the [**raisetrace**(3)](docs/raisetrace.3.md) man page.
 
 ## Building
 
@@ -28,7 +28,7 @@ This would make the program generate a stack trace before it terminates when it 
 ### Procedure
 
 > [!NOTE]
-> sigtrace must be built as the same library type that libbacktrace is; if your system's libbacktrace is a static library, pass `-Ddefault_library=static` to `meson setup` or it'll fail to link.
+> raisetrace must be built as the same library type that libbacktrace is; if your system's libbacktrace is a static library, pass `-Ddefault_library=static` to `meson setup` or it'll fail to link.
 
 1. Configure and change into the build directory with `meson setup builddir && cd builddir`
 
