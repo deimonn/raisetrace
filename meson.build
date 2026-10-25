@@ -10,9 +10,7 @@ project(
     ]
 )
 
-compiler = meson.get_compiler('c')
-
-backtrace = compiler.find_library('backtrace')
+backtrace = declare_dependency(link_args: ['-lbacktrace'])
 md2manc = find_program('md2manc', required: get_option('man-pages'))
 
 add_project_arguments(
