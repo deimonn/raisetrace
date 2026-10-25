@@ -16,7 +16,7 @@ int raisetrace(const int *siglist);
 
 See [**raisetrace_faults**(3)](raisetrace_faults.3.md) for supplementary predefined lists of signals.
 
-If [**raisetrace_callback**(3)](raisetrace_callback.3.md) is set to any non-NULL value, the installed handler simply invokes it and then returns.
+If [**raisetrace_callback**(3)](raisetrace_callback.3.md) is set to any non-NULL value, the installed handler simply invokes it and then performs the action specified by its return value.
 
 Otherwise if [**raisetrace_callback**(3)](raisetrace_callback.3.md) is NULL, the handler instead prints a message describing the raised signal and a stack trace (when supported by the platform) to the standard error stream, and then performs the default action for the signal.
 

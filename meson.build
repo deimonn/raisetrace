@@ -68,7 +68,11 @@ if md2manc.found()
         )
     endforeach
 
-    install_man('docs/raisetrace_unhandled.3')
+    install_man(
+        'docs/RAISETRACE_CONTINUE.3',
+        'docs/RAISETRACE_DEFAULT.3',
+        'docs/raisetrace_unhandled.3'
+    )
 endif
 
 meson.add_postconf_script('compile_flags.py', 'raisetrace')

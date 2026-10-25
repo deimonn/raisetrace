@@ -14,8 +14,8 @@ const int raisetrace_unhandled[] = {
     SIGALRM, SIGHUP, SIGINT, SIGPIPE, SIGTERM, SIGUSR1, SIGUSR2, SIGVTALRM, 0
 };
 
-void (*raisetrace_callback)(int num, const char *msg,
-                            struct backtrace_state *state);
+int (*raisetrace_callback)(int num, const char *msg,
+                           struct backtrace_state *state);
 
 static struct backtrace_state *backtrace_state;
 
@@ -284,7 +284,11 @@ static void raisetrace_action(int signum, siginfo_t *siginfo, void *context)
     print_message(message, sizeof(message) - 1, signum, siginfo);
 
     if (raisetrace_callback) {
-        raisetrace_callback(signum, message, backtrace_state);
+        int action = raisetrace_callback(signum, message, backtrace_state);
+
+        if (action != RAISETRACE_CONTINUE)
+            default_action(signum);
+
         return;
     }
 
