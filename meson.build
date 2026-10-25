@@ -47,7 +47,8 @@ if md2manc.found()
     date = run_command('date', '+%Y-%m-%d', check: true).stdout().strip()
     docs = [
         'raisetrace.3',
-        'raisetrace_callback.3'
+        'raisetrace_callback.3',
+        'raisetrace_faults.3'
     ]
 
     foreach doc : docs
@@ -67,10 +68,7 @@ if md2manc.found()
         )
     endforeach
 
-    install_man(
-        'docs/raisetrace_faults.3',
-        'docs/raisetrace_unhandled.3'
-    )
+    install_man('docs/raisetrace_unhandled.3')
 endif
 
 meson.add_postconf_script('compile_flags.py', 'raisetrace')
