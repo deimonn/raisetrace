@@ -67,6 +67,7 @@ int main(void)
     }
 
     raisetrace_callback = custom_callback;
+    raisetrace(raisetrace_faults);
 
     // ...
 }
