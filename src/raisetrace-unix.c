@@ -290,8 +290,10 @@ static void raisetrace_action(int signum, siginfo_t *siginfo, void *context)
 
     fprintf(stderr, "%s\n\n", message);
 
-    if (backtrace_state)
+    if (backtrace_state) {
         backtrace_print(backtrace_state, 1, stderr);
+        fputc('\n', stderr);
+    }
 
     default_action(signum);
 }
