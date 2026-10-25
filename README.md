@@ -48,4 +48,4 @@ Beyond that, if you wish to contribute changes to the project, just ensure it bu
 
 ## Future directions
 
-The library is pretty simple and unlikely to change significantly anytime soon. Once tests are up, if the library is still stable, it'll probably get bumped to 1.0.
+The library is in a usable state but may still be subject to change. Once tests are up, if the library remains stable for long enough, it may get bumped to 1.0.
