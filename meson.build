@@ -45,21 +45,27 @@ pkgconfig.generate(
 
 if md2manc.found()
     date = run_command('date', '+%Y-%m-%d', check: true).stdout().strip()
-
-    custom_target(
+    docs = [
         'raisetrace.3',
-        command: [
-            md2manc,
-            '-d', date,
-            '-S', 'raisetrace ' + meson.project_version(),
-            '@INPUT@'
-        ],
-        input: 'docs/raisetrace.3.md',
-        output: 'raisetrace.3',
-        capture: true,
-        install: true,
-        install_dir: get_option('mandir') + '/man3'
-    )
+        'raisetrace_callback.3'
+    ]
+
+    foreach doc : docs
+        custom_target(
+            doc,
+            command: [
+                md2manc,
+                '-d', date,
+                '-S', 'raisetrace ' + meson.project_version(),
+                '@INPUT@'
+            ],
+            input: 'docs/' + doc + '.md',
+            output: doc,
+            capture: true,
+            install: true,
+            install_dir: get_option('mandir') + '/man3'
+        )
+    endforeach
 
     install_man(
         'docs/raisetrace_faults.3',

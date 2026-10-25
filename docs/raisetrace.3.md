@@ -16,9 +16,11 @@ int raisetrace(const int *siglist);
 
 # Description
 
-**raisetrace**() installs a signal handler via **sigaction**(2) for each of the signals specified in _siglist_. The _siglist_ array must be zero-terminated.
+**raisetrace**() installs a signal handler via **sigaction**(2) for each of the signals specified in _siglist_. The _siglist_ array must be zero-terminated. Only signals defined by POSIX.1-2008 are recognized; other signals simply generate an "unknown signal" message instead of a descriptive one.
 
-The handler will print signal information via **psiginfo**(3) and, when the platform supports it, follow it with a full stack trace. Afterwards, the handler simply performs the default action for the signal.
+If [**raisetrace_callback**(3)](raisetrace_callback.3.md) is set to any non-NULL value, the handler simply invokes it and returns.
+
+Otherwise if [**raisetrace_callback**(3)](raisetrace_callback.3.md) is NULL, the handler instead prints a message describing the raised signal and a stack trace (when supported by the platform) to the standard error stream, and then performs the default action for the signal.
 
 The installed handlers are not special in any way and may be overriden or reinstated again at any point for any given signal, but note that this function is not thread-safe nor guaranteed to be async-signal-safe, so this is probably best done during program initialization.
 
@@ -56,4 +58,4 @@ If you think you've found a bug, please open an issue in <https://github.com/dei
 
 # See also
 
-**sigaction**(2), **psiginfo**(3)
+**sigaction**(2), [**raisetrace_callback**(3)](raisetrace_callback.3.md)
