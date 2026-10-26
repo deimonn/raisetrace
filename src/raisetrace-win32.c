@@ -12,9 +12,10 @@ const int raisetrace_faults[] = {
     EXCEPTION_FLT_DENORMAL_OPERAND, EXCEPTION_FLT_DIVIDE_BY_ZERO,
     EXCEPTION_FLT_INEXACT_RESULT, EXCEPTION_FLT_INVALID_OPERATION,
     EXCEPTION_FLT_OVERFLOW, EXCEPTION_FLT_STACK_CHECK, EXCEPTION_FLT_UNDERFLOW,
-    EXCEPTION_ILLEGAL_INSTRUCTION, EXCEPTION_IN_PAGE_ERROR,
-    EXCEPTION_INT_DIVIDE_BY_ZERO, EXCEPTION_INT_OVERFLOW,
-    EXCEPTION_INVALID_DISPOSITION, EXCEPTION_NONCONTINUABLE_EXCEPTION,
+    EXCEPTION_GUARD_PAGE, EXCEPTION_ILLEGAL_INSTRUCTION,
+    EXCEPTION_IN_PAGE_ERROR, EXCEPTION_INT_DIVIDE_BY_ZERO,
+    EXCEPTION_INT_OVERFLOW, EXCEPTION_INVALID_DISPOSITION,
+    EXCEPTION_INVALID_HANDLE, EXCEPTION_NONCONTINUABLE_EXCEPTION,
     EXCEPTION_PRIV_INSTRUCTION, EXCEPTION_SINGLE_STEP,
     EXCEPTION_STACK_OVERFLOW, 0
 };
@@ -40,11 +41,13 @@ static int exception_mask[256] = {
     [EXCEPTION_FLT_OVERFLOW & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_FLT_STACK_CHECK & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_FLT_UNDERFLOW & 0xFF] = EXCEPTION_IGNORE,
+    [EXCEPTION_GUARD_PAGE & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_ILLEGAL_INSTRUCTION & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_IN_PAGE_ERROR & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_INT_DIVIDE_BY_ZERO & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_INT_OVERFLOW & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_INVALID_DISPOSITION & 0xFF] = EXCEPTION_IGNORE,
+    [EXCEPTION_INVALID_HANDLE & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_NONCONTINUABLE_EXCEPTION & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_PRIV_INSTRUCTION & 0xFF] = EXCEPTION_IGNORE,
     [EXCEPTION_SINGLE_STEP & 0xFF] = EXCEPTION_IGNORE,
@@ -105,6 +108,9 @@ static int print_message(char *buf, int bufsz, PEXCEPTION_RECORD er)
     case EXCEPTION_FLT_UNDERFLOW:
         return snprintf(buf, bufsz,
                         "raised EXCEPTION_FLT_UNDERFLOW: exponent of a floating-point operation is less than the magnitude allowed by the corresponding type");
+    case EXCEPTION_GUARD_PAGE:
+        return snprintf(buf, bufsz,
+                        "raised EXCEPTION_GUARD_PAGE: thread accessed memory allocated with the PAGE_GUARD modifier");
     case EXCEPTION_ILLEGAL_INSTRUCTION:
         return snprintf(buf, bufsz,
                         "raised EXCEPTION_ILLEGAL_INSTRUCTION: thread tried to execute an invalid instruction");
@@ -136,6 +142,9 @@ static int print_message(char *buf, int bufsz, PEXCEPTION_RECORD er)
     case EXCEPTION_INVALID_DISPOSITION:
         return snprintf(buf, bufsz,
                         "raised EXCEPTION_INVALID_DISPOSITION: exception handler returned an invalid disposition to the exception dispatcher");
+    case EXCEPTION_INVALID_HANDLE:
+        return snprintf(buf, bufsz,
+                        "raised EXCEPTION_INVALID_HANDLE: thread used a handle to a kernel object that was invalid");
     case EXCEPTION_NONCONTINUABLE_EXCEPTION:
         return snprintf(buf, bufsz,
                         "raised EXCEPTION_NONCONTINUABLE_EXCEPTION: thread tried to continue execution after a noncontinuable exception occurred");
