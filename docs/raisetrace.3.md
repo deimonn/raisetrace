@@ -30,7 +30,7 @@ The installed signal handler is not special in any way and may be overriden or r
 
 ## Windows-specific behavior
 
-Each integer in the _list_ is expected to be an exception code; see https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-exception_record.
+Each integer in the _list_ is expected to be an exception code; see <https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-exception_record>.
 
 The installed exception handler is a vectored exception handler, and the mask of exceptions to catch is a **raisetrace**() implementation detail.
 
