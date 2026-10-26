@@ -19,7 +19,7 @@ This would make the program generate a stack trace before it terminates when it 
 
 ### Prerequisites
 
-- POSIX.1-2008 environment
+- UNIX-like environment (use [MSYS2](https://www.msys2.org/) on Windows)
 - C99 compiler
 - Meson ≥1.1
 - [libbacktrace](https://github.com/ianlancetaylor/libbacktrace) ≥1.0
