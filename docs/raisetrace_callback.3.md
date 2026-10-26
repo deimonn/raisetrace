@@ -22,11 +22,11 @@ extern int (*raisetrace_callback)(int num, const char *msg,
 
 + **int** _num_
 
-  Number of the raised signal.
+  Raised signal number or exception code.
 
 + **const char \***_msg_
 
-  String describing the raised signal, including details when available.
+  String describing the raised signal or exception, including details when available.
 
 + **struct backtrace_state \***_state_
 
@@ -36,11 +36,11 @@ extern int (*raisetrace_callback)(int num, const char *msg,
 
 + **RAISETRACE_CONTINUE**
 
-  If the callback returns this value, the signal handler tries to continue execution of the program regardless of the kind of signal received.
+  If the callback returns this value, the handler tries to continue execution of the program regardless of the kind of signal or exception raised.
 
 + **RAISETRACE_DEFAULT**
 
-  If the callback returns this value or any other not specified above, it will perform the default action for the signal, which may mean continuing execution or terminating abnormally.
+  If the callback returns this value or any other not specified above, it will perform the default action for the signal or exception, which may mean continuing execution or terminating abnormally.
 
 # Example
 

@@ -302,7 +302,7 @@ static void raisetrace_action(int signum, siginfo_t *siginfo, void *context)
     default_action(signum);
 }
 
-int raisetrace(const int *siglist)
+int raisetrace(const int *list)
 {
     if (!backtrace_state)
         backtrace_state = backtrace_create_state(NULL, 1, NULL, NULL);
@@ -314,8 +314,8 @@ int raisetrace(const int *siglist)
 
     int error = 0;
 
-    for (size_t i = 0; siglist[i]; i++) {
-        if (sigaction(siglist[i], &action, NULL) != 0)
+    for (size_t i = 0; list[i]; i++) {
+        if (sigaction(list[i], &action, NULL) != 0)
             error = -EINVAL;
     }
 

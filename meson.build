@@ -21,7 +21,12 @@ add_project_arguments(
 )
 
 headers = files('include/raisetrace.h')
-sources = files('src/raisetrace-unix.c')
+
+if host_machine.system() == 'windows'
+    sources = files('src/raisetrace-win32.c')
+else
+    sources = files('src/raisetrace-unix.c')
+endif
 
 install_headers(headers)
 
@@ -37,7 +42,7 @@ pkgconfig = import('pkgconfig')
 pkgconfig.generate(
     raisetrace,
     name: 'raisetrace',
-    description: 'C library for generating stack traces on fault/signal',
+    description: 'C library for generating stack traces on signal/exception',
     url: 'https://github.com/deimonn/raisetrace'
 )
 
