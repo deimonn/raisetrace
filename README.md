@@ -1,6 +1,6 @@
 # raisetrace
 
-**raisetrace** is a simple library for generating messages with stack traces when a signal is received. You set it up like so:
+**raisetrace** is a simple library for generating messages with stack traces when a signal or exception is raised. You set it up like so:
 
 ```C
 #include <raisetrace.h>
