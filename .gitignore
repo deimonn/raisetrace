@@ -43,3 +43,10 @@ pythonenv*
 __pycache__
 .cache
 .clangd/
+
+# build artifacts
+*.o
+*.a
+*.so
+*.pc
+*.[1-8]

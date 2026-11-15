@@ -1,4 +1,5 @@
-#include <raisetrace.h>
+#ifdef _WIN32
+#include "raisetrace.h"
 
 #include <backtrace.h>
 
@@ -218,3 +219,6 @@ int raisetrace(const int *list)
 
     return error;
 }
+#else
+extern int empty_translation_unit;
+#endif

@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 }
 ```
 
-This would make the program generate a stack trace before it terminates when it faults. More information is available on the [**raisetrace**(3)](docs/raisetrace.3.md) man page.
+This would make the program generate a stack trace before it terminates when it faults. More information is available on the [**raisetrace**(3)](raisetrace.3.md) man page.
 
 ## Building
 
@@ -21,30 +21,30 @@ This would make the program generate a stack trace before it terminates when it 
 
 - UNIX-like environment (use [MSYS2](https://www.msys2.org/) on Windows)
 - C99 compiler
-- Meson ≥1.1
+- Make
 - [libbacktrace](https://github.com/ianlancetaylor/libbacktrace) ≥1.0
 - (Optional) [md2manc](https://github.com/deimonn/md2manc) ≥0.1
+  - Used to generate manpages; pass `DOCS=` to Make to omit
 
 ### Procedure
 
-> [!NOTE]
-> raisetrace must be built as the same library type that libbacktrace is; if your system's libbacktrace is a static library, pass `-Ddefault_library=static` to `meson setup` or it'll fail to link.
+Build with `make`, install with `make install`, run tests with `make check`.
 
-1. Configure and change into the build directory with `meson setup builddir && cd builddir`
+The default configuration is a debug build. To build and install a release configuration, try:
 
-2. Build with `ninja`
+```Shell
+make CFLAGS="-O2" install
+```
 
-3. Optionally install the library with `ninja install`
-
-See Meson's [Quickstart Guide](https://mesonbuild.com/Quick-guide.html).
+Configuration must be done by overriding values as per above. Environment variables are ignored. All options, their default values, and their explanations can be found at the top of the [Makefile](Makefile).
 
 ## Contributing
 
 Contributions are welcome. The code here follows the [Linux kernel coding style](https://kernel.org/doc/html/latest/process/coding-style.html) but with 4-space indentation, disregarding the **Conditional Compilation** section, and disregarding that which is only applicable inside the kernel.
 
-Code format is partially enforced using GNU indent by the [check_format.sh](check_format.sh) script, which prints out a diff when changes are necessary. Invoke it like `./check_format.sh` (ensure you have `indent` installed).
+Code format is partially enforced using GNU indent through a script that prints out a diff when changes are necessary. Run it via `make format` (ensure you have `indent` installed).
 
-Beyond that, if you wish to contribute changes to the project, just ensure it builds cleanly and that all tests are passing.
+Beyond that, if you wish to contribute changes to the project, just ensure the default debug configuration builds cleanly and that all tests are passing.
 
 ## Future directions
 
