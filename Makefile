@@ -78,8 +78,8 @@ format:
 $(OBJS): raisetrace.h
 
 compile_flags.txt:
-	echo '-xc -std=c99 $(CFLAGS) $(CPPFLAGS)' | tr " " "\n" > $@
-	echo '-Wno-empty-translation-unit' >> $@
+	echo -xc -std=c99 $(CFLAGS) $(CPPFLAGS) | tr " " "\n" > $@
+	echo -Wno-empty-translation-unit >> $@
 
 libraisetrace.a: $(OBJS)
 	$(AR) $(ARFLAGS) $@ $?
