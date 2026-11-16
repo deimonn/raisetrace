@@ -1,4 +1,4 @@
-/* raisetrace: C library for generating stack traces on fault/signal
+/* raisetrace: C library for generating stack traces on signal/exception
  * (https://github.com/deimonn/raisetrace) */
 
 #ifndef _RAISETRACE_H
