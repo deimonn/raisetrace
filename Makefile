@@ -44,6 +44,8 @@ OBJS = raisetrace_posix.o raisetrace_win32.o
 # manpage list; override to empty value to skip docs
 DOCS = RAISETRACE_CONTINUE.3 RAISETRACE_DEFAULT.3 raisetrace.3 \
        raisetrace_callback.3 raisetrace_faults.3 raisetrace_unhandled.3
+# test list
+TESTS = test_raisetrace test_raisetrace_callback
 
 all: compile_flags.txt libraisetrace.a raisetrace.pc $(DOCS)
 
@@ -64,18 +66,25 @@ uninstall:
 	-cd $(DESTDIR)$(LIBDIR)/pkgconfig && rm -f raisetrace.pc
 	-[ -n "$(DOCS)" ] && cd $(DESTDIR)$(MANDIR)/man3 && rm -f $(DOCS)
 
+check: $(TESTS)
+	sh test_raised.sh $(TESTS)
+
 clean:
 	-rm -f compile_flags.txt libraisetrace.a raisetrace.pc $(OBJS) $(DOCS)
+	-rm -f *.log $(TESTS)
 
 format:
 	sh check_format.sh
 
 .c.o:
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<
+.c:
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $< libraisetrace.a $(LDLIBS)
 .3.md.3:
 	$(MD2MANC) -d "$(DATE)" -S "raisetrace $(VERSION)" $< > $@
 
 $(OBJS): raisetrace.h
+$(TESTS): libraisetrace.a
 
 compile_flags.txt:
 	echo -xc -std=c99 $(CFLAGS) $(CPPFLAGS) | tr " " "\n" > $@

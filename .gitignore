@@ -45,6 +45,9 @@ __pycache__
 .clangd/
 
 # build artifacts
+test_*
+!test_*.*
+*.log
 *.o
 *.a
 *.so
